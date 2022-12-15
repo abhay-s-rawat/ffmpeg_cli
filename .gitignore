@@ -18,3 +18,5 @@ pubspec.lock
 
 # Mac
 .DS_Store
+
+gitcommit.sh

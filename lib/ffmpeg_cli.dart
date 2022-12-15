@@ -6,6 +6,7 @@ export 'src/ffprobe/ffprobe.dart';
 export 'src/ffprobe/ffprobe_json.dart';
 
 // FFMPEG
+export 'src/ffmpeg/ffmpeg_configurator.dart';
 export 'src/ffmpeg/ffmpeg_command.dart';
 export 'src/ffmpeg/ffmpeg_command_builder.dart';
 export 'src/ffmpeg/log_level.dart';
