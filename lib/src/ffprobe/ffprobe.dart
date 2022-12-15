@@ -13,8 +13,9 @@ class Ffprobe {
   static Future<FfprobeResult> run(
     String filepath, {
     String? workingDir,
+    String? ffprobePath,
   }) async {
-    final result = await Process.run('ffprobe', [
+    final result = await Process.run(ffprobePath ?? 'ffprobe', [
       '-v',
       'quiet',
       '-print_format',
@@ -26,10 +27,13 @@ class Ffprobe {
 
     if (result.exitCode != 0) {
       print('Failed to run ffprobe for "$filepath"');
-      throw Exception('ffprobe returned error: ${result.exitCode}\n${result.stderr}');
+      throw Exception(
+          'ffprobe returned error: ${result.exitCode}\n${result.stderr}');
     }
 
-    if (result.stdout == null || result.stdout is! String || (result.stdout as String).isEmpty) {
+    if (result.stdout == null ||
+        result.stdout is! String ||
+        (result.stdout as String).isEmpty) {
       throw Exception('ffprobe did not output expected data: ${result.stdout}');
     }
 
