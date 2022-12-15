@@ -49,7 +49,7 @@ class FFMpegConfigurator {
     }
     String ffmpegZipPath = path.join(tempFolderPath!, "ffmpeg.zip");
     File tempZipFile = File(ffmpegZipPath);
-    if (!(await tempZipFile.exists())) {
+    if (await tempZipFile.exists() == false) {
       try {
         Dio dio = Dio();
         Response response = await dio.download(
@@ -68,15 +68,17 @@ class FFMpegConfigurator {
         print(e.toString());
         return null;
       }
+    } else {
+      return tempZipFile;
     }
-    return null;
   }
 
-  String? extractZipFile(File zip) {
+  Future<String?> extractZipFile(File zip) async {
     if (ffmpegInstallationPath == null) return null;
-    final inputStream = InputFileStream(zip.path);
-    final archive = ZipDecoder().decodeBuffer(inputStream);
-    extractArchiveToDisk(archive, ffmpegInstallationPath!);
+    //final inputStream = InputFileStream(zip.path);
+    //final archive = ZipDecoder().decodeBuffer(inputStream);
+    //extractArchiveToDisk(archive, ffmpegInstallationPath!);
+    await extractFileToDisk(zip.path, ffmpegInstallationPath!);
     return ffmpegInstallationPath;
   }
 
@@ -91,7 +93,7 @@ class FFMpegConfigurator {
         queryParameters: queryParameters,
       );
       if (zip != null) {
-        String? installPath = extractZipFile(zip);
+        String? installPath = await extractZipFile(zip);
         if (installPath != null) {
           return true;
         }
