@@ -84,15 +84,19 @@ class FFMpegConfigurator {
     Map<String, dynamic>? queryParameters,
   }) async {
     await setDefaultLocations();
-    File? zip = await downloadFFMpeg(
-      onReceiveProgress: onReceiveProgress,
-      queryParameters: queryParameters,
-    );
-    if (zip != null) {
-      String? installPath = extractZipFile(zip);
-      if (installPath != null) {
-        return true;
+    if (!(await isFFMpegPresent())) {
+      File? zip = await downloadFFMpeg(
+        onReceiveProgress: onReceiveProgress,
+        queryParameters: queryParameters,
+      );
+      if (zip != null) {
+        String? installPath = extractZipFile(zip);
+        if (installPath != null) {
+          return true;
+        }
       }
+    } else {
+      return true;
     }
     return false;
   }
