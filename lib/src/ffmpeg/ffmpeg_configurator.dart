@@ -87,7 +87,7 @@ class FFMpegConfigurator {
     Map<String, dynamic>? queryParameters,
   }) async {
     await setDefaultLocations();
-    if (!(await isFFMpegPresent())) {
+    if (await isFFMpegPresent() == false) {
       File? zip = await downloadFFMpeg(
         onReceiveProgress: onReceiveProgress,
         queryParameters: queryParameters,

@@ -71,9 +71,12 @@ class FfmpegCommand {
         '-${arg.name}',
         arg.value,
       ],
-      '-filter_complex', filterGraph.toCli(), // filter graph
-      outputFilepath,
     ];
+    if (filterGraph.chains.isNotEmpty) {
+      commands.add('-filter_complex');
+      commands.add(filterGraph.toCli());
+    }
+    commands.add(outputFilepath);
     if (overwriteOutputFiles) {
       commands.add('-y');
     }
@@ -93,10 +96,14 @@ class FfmpegCommand {
     for (final arg in args) {
       buffer.writeln('  ${arg.toCli()}');
     }
-    buffer.writeln('  -filter_complex ');
-    buffer.writeln(filterGraph.toCli(indent: '    '));
+    if (filterGraph.chains.isNotEmpty) {
+      buffer.writeln('  -filter_complex ');
+      buffer.writeln(filterGraph.toCli(indent: '    '));
+    }
     buffer.writeln('  $outputFilepath');
-
+    if (overwriteOutputFiles) {
+      buffer.writeln(' -y');
+    }
     return buffer.toString();
   }
 }

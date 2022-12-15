@@ -37,9 +37,12 @@ class ScaleFilter implements Filter {
       if (interl != null) 'interl=$interl',
       if (param0 != null) 'param0=$param0',
       if (param1 != null) 'param1=$param1',
-      if (size != null) 'size=$size',
+      if (size != null) 'size=${size.toString()}',
     ];
-
-    return 'scale=${properties.join(':')}';
+    if (properties.isNotEmpty) {
+      return 'scale=${properties.join(':')}';
+    } else {
+      return '';
+    }
   }
 }
