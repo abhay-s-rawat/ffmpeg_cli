@@ -10,8 +10,10 @@ class FpsFilter implements Filter {
     this.round,
     this.eofAction,
   })  : assert(fps > 0),
-        assert(round == null || const ['zero', 'inf', 'down', 'up', 'near'].contains(round)),
-        assert(eofAction == null || const ['round', 'pass'].contains(eofAction));
+        assert(round == null ||
+            const ['zero', 'inf', 'down', 'up', 'near'].contains(round)),
+        assert(
+            eofAction == null || const ['round', 'pass'].contains(eofAction));
 
   final int fps;
   final Duration? startTime;
@@ -26,7 +28,10 @@ class FpsFilter implements Filter {
       if (round != null) 'round=$round',
       if (eofAction != null) 'eof_action=$eofAction',
     ];
-
-    return 'fps${properties.isNotEmpty ? '=${properties.join(':')}' : ''}';
+    if (properties.isNotEmpty) {
+      return 'fps=${properties.join(':')}';
+    } else {
+      return '';
+    }
   }
 }

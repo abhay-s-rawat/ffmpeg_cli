@@ -25,7 +25,11 @@ class TrimFilter implements Filter {
     if (duration != null) {
       properties.add("duration='${duration!.toSeconds()}'");
     }
-    return "trim=${properties.join(':')}";
+    if (properties.isNotEmpty) {
+      return "trim=${properties.join(':')}";
+    } else {
+      return '';
+    }
   }
 }
 
@@ -53,6 +57,10 @@ class ATrimFilter implements Filter {
     if (duration != null) {
       properties.add("duration='${duration!.toSeconds()}'");
     }
-    return "atrim=${properties.join(':')}";
+    if (properties.isNotEmpty) {
+      return "atrim=${properties.join(':')}";
+    } else {
+      return '';
+    }
   }
 }

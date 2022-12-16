@@ -1,9 +1,12 @@
 import 'package:ffmpeg_cli/src/ffmpeg/ffmpeg_command.dart';
 
 class ScaleFilter implements Filter {
-  /// user can set [width] [height] to other values.
+  /// User can now set [width] [height] to nevative values.
+  ///
   /// To crop video but maintain aspect ratio use -1, eg: [height] = 300 and [width] = -1
+  ///
   /// To crop video but maintain aspect ratio but the video should be divisible by 2 then use -2, eg: [height] = 300 and [width] = -2 generally used in x264 videos
+  ///
   /// For x265 videos dimensions must be divisible by 8. use -8. eg: [height] = 300 and [width] = -8 generally used in x265 videos
   ///
   ScaleFilter({

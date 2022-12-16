@@ -14,7 +14,7 @@ class Ffmpeg {
   Future<Process> run(FfmpegCommand command) {
     return Process.start(
       ffmpegPath ?? 'ffmpeg',
-      command.toCli(),
+      [...command.toCli(), '-nostats', '-progress -'],
     );
   }
 }
@@ -270,5 +270,9 @@ class FfmpegStream {
 /// Filters are the workhorse of FFMPEG. Any change or effect to a given
 /// asset happens by way of a filter, e.g., trim, fade, concatenation, etc.
 abstract class Filter {
+  String toCli();
+}
+
+abstract class CliArguments {
   String toCli();
 }
